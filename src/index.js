@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", () => {
 const holes = document.querySelectorAll('.hole');
 const moles = document.querySelectorAll('.mole');
 const startButton = document.querySelector('#start');
@@ -8,8 +9,8 @@ const timerDisplay = document.querySelector('#timer'); // use querySelector() to
 let time = 0;
 let timer;
 let lastHole = 0;
-let points = 0;
-let difficulty = "hard";
+let points = 5;
+let difficulty = "easy";
 
 /**
  * Generates a random integer within a range.
@@ -40,9 +41,9 @@ function randomInteger(min, max) {
  *
  */
 function setDelay(difficulty) {
-  if (difficulty.equals("easy")){
+  if (difficulty==="easy"){
     return 1500;
-  }else if(difficulty.equals("normal")){
+  }else if(difficulty==="normal"){
     return 1000;
   }else{
     return randomInteger(600, 1200);
@@ -67,13 +68,12 @@ function setDelay(difficulty) {
 function chooseHole(holes) {
   let index = randomInteger(0,8);
   let hole = holes[index];
-  let lastHole = {};
   if (hole===lastHole){
     chooseHole(holes);
-  }else{
+  }
     lastHole=hole;
     return hole;
-  }
+  
 }
 
 /**
@@ -99,10 +99,11 @@ function chooseHole(holes) {
 function gameOver() {
   // TODO: Write your code here
   if (time>0){
-    timeoutID=showUp();
+    let timeoutID=showUp();
     return timeoutID;
   }else{
-    return stopGame();
+    let gameStopped = stopGame();
+    return gameStopped;
   }
 }
 
@@ -195,7 +196,7 @@ function updateTimer() {
     time -= 1;
     timerDisplay.textContent = time;
   }
-  return time;  return time;
+  return time;
 }
 
 /**
@@ -269,10 +270,14 @@ function stopGame(){
 function startGame(){
   setDuration(10);
   showUp();
+  clearScore();
+  startTimer();
   return "game started";
 }
 
 startButton.addEventListener("click", startGame);
+setEventListeners();
+});
 
 
 // Please do not modify the code below.
